@@ -10,7 +10,7 @@ python-versions = "*"
 name = "asgiref"
 version = "3.3.4"
 description = "ASGI specs, helper code, and adapters"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -89,7 +89,7 @@ python-versions = ">=3.6.1"
 name = "click"
 version = "8.0.1"
 description = "Composable command line interface toolkit"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -101,7 +101,7 @@ importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 name = "colorama"
 version = "0.4.4"
 description = "Cross-platform colored terminal text."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
@@ -168,7 +168,7 @@ pyflakes = ">=2.3.0,<2.4.0"
 name = "h11"
 version = "0.12.0"
 description = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -187,7 +187,7 @@ license = ["editdistance-s"]
 name = "importlib-metadata"
 version = "4.4.0"
 description = "Read metadata from Python packages"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -480,7 +480,7 @@ python-versions = "*"
 name = "uvicorn"
 version = "0.14.0"
 description = "The lightning-fast ASGI server."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -516,7 +516,7 @@ testing = ["coverage (>=4)", "coverage-enable-subprocess (>=1)", "flaky (>=3)", 
 name = "zipp"
 version = "3.4.1"
 description = "Backport of pathlib-compatible object wrapper for zip files"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -530,7 +530,7 @@ orjson = []
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "fa72e4351fccf46d3dbc685e6299114b5a9b250bf653a9bcdb85e0208d9b2e08"
+content-hash = "a4735cdaff33bace33bfdf84722920794eff2b077833e2244264bc6cf9ae6051"
 
 [metadata.files]
 appdirs = [

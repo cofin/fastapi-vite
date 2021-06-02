@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-vite"
-version = "0.1.5"
+version = "0.1.6"
 description = "Helper Utilities for loading assets genated from Vite manifests"
 authors = ["Cody Fincher <cody.fincher@gmail.com>"]
 keywords = ["fastapi","starlette","vite"]
@@ -11,10 +11,9 @@ repository = "https://github.com/cofin/fastapi-vite"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-fastapi = "^0.65.1"
-Jinja2 = "^3.0.1"
-starlette = "^0.14.2"
-uvicorn = "^0.14.0"
+fastapi = "*"
+Jinja2 = "*"
+starlette = "*"
 
 
 [tool.poetry.dev-dependencies]
@@ -26,6 +25,8 @@ mypy = "^0.790"
 isort = "^5.0"
 pre-commit = "^2.8.2"
 black = "^21.5b2"
+uvicorn = "^0.14.0"
+
 
 [tool.poetry.extras]
 orjson = ["orjson"]
