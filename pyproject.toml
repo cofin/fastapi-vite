@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "fastapi-vite"
+version = "0.1.0"
+description = "Helper Utilities for loading static-file manifests from vite"
+authors = ["Cody Fincher <cody.fincher@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+starlette = "^0.14.2"
+pydantic = {extras = ["dotenv"], version = "^1.8.2"}
+
+
+[tool.poetry.dev-dependencies]
+pytest-cov = "^2.10.1"
+pytest = "^6.2.3"
+autoflake = "^1.4"
+flake8 = "^3.8.4"
+mypy = "^0.790"
+isort = "^5.0"
+pre-commit = "^2.8.2"
+black = "^21.5b2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
