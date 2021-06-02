@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-vite"
-version = "0.1.1"
+version = "0.1.2"
 description = "Helper Utilities for loading assets genated from Vite manifests"
 authors = ["Cody Fincher <cody.fincher@gmail.com>"]
 keywords = ["fastapi","starlette","vite"]
@@ -13,7 +13,7 @@ repository = "https://github.com/cofin/fastapi-vite"
 python = "^3.7"
 pydantic = {extras = ["dotenv"], version = "^1.8.2"}
 orjson = "^3.5.3"
-fastapi = "^0.65.1"
+fastapi = "*"
 Jinja2 = "^3.0.1"
 
 
