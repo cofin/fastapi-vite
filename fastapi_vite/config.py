@@ -1,6 +1,14 @@
 from enum import Enum
-
+import toml
 from pydantic import BaseSettings
+from pathlib import Path
+
+
+def _get_project_meta():
+    return toml.load(str(Path(__file__).parent.parent / 'pyproject.toml'))['tool']['poetry']
+
+
+pkg_meta = _get_project_meta()
 
 
 class AppMode(Enum):
@@ -29,7 +37,7 @@ class Settings(BaseSettings):
         env_file = ".env"
         env_file_encoding = "utf-8"
 
-    @property
+    @ property
     def is_dev(self) -> bool:
         return self.ENVIRONMENT == AppMode.DEV
 

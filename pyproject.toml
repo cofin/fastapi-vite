@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fastapi-vite"
 version = "0.1.6"
-description = "Helper Utilities for loading assets genated from Vite manifests"
+description = "Integration utilities for FastAPI and ViteJS."
 authors = ["Cody Fincher <cody.fincher@gmail.com>"]
 keywords = ["fastapi","starlette","vite"]
 license = "MIT"
