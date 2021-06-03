@@ -1,0 +1,32 @@
+{
+  "name": "fastapi-vite",
+  "description": "FastAPI Vite integration",
+  "main": "assets/js/main.js",
+  "repository": "git@bitbucket.org:gluent/onboard.git",
+  "author": "Cody Fincher <cody@gluent.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.2.0",
+    "@heroicons/react": "^1.0.1",
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "@tailwindcss/typography": "^0.4.1",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.3.2",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@vitejs/plugin-react-refresh": "^1.1.0",
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.0",
+    "tailwindcss": "^2.1.2",
+    "typescript": "^4.1.2",
+    "vite": "^2.0.0-beta.70"
+  }
+}
