@@ -1,17 +1,6 @@
-from pathlib import Path
 from typing import Any, Dict, Optional
 
-import toml
 from pydantic import BaseSettings, validator
-
-
-def _get_project_meta():
-    return toml.load(str(Path(__file__).parent.parent / "pyproject.toml"))["tool"][
-        "poetry"
-    ]
-
-
-pkg_meta = _get_project_meta()
 
 
 class Settings(BaseSettings):
