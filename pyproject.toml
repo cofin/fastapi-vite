@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi-vite"
-version = "0.2.1"
+version = "0.2.2"
 description = "Integration utilities for FastAPI and ViteJS."
 authors = ["Cody Fincher <cody.fincher@gmail.com>"]
 keywords = ["fastapi","starlette","vite"]
@@ -10,12 +10,12 @@ homepage = "https://github.com/cofin/fastapi-vite"
 repository = "https://github.com/cofin/fastapi-vite"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 fastapi = "*"
 Jinja2 = "*"
 starlette = "*"
-python-dotenv = "^0.17.1"
-aiofiles = "^0.7.0"
+python-dotenv = "*"
+aiofiles = "*"
 
 
 [tool.poetry.dev-dependencies]
