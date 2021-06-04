@@ -8,14 +8,13 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
     />
-
   </head>
 
   <body class="font-sans antialiased leading-none text-gray-700">
-    <div id="app"></div>
-    {{ render_vite_hmr_client() }}
+    <div id="root"></div>
+    {{ vite_hmr_client() }}
+    {{ vite_asset('javascript/main.tsx') }}
 
-    <script type="text/javascript" defer src="{{ asset_url('javascript/main.tsx') }}"></script>
 
 
   </body>

@@ -4,9 +4,9 @@ from starlette.routing import Route, Mount
 from starlette.templating import Jinja2Templates
 from starlette.staticfiles import StaticFiles
 
-templates = Jinja2Templates(directory='templates')
-templates.env.globals['render_vite_hmr_client'] = fastapi_vite.render_vite_hmr_client
-templates.env.globals['asset_url'] = fastapi_vite.asset_url
+templates = Jinja2Templates(directory='assets/templates')
+templates.env.globals['vite_hmr_client'] = fastapi_vite.vite_hmr_client
+templates.env.globals['vite_asset'] = fastapi_vite.vite_asset
 
 
 async def homepage(request):

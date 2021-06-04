@@ -12,38 +12,18 @@ export default defineConfig({
 
   ],
   build: {
-    target: "esnext",
-    outDir: "../../static/dist",
+    target: "es2016",
+    outDir: "../static",
     emptyOutDir: true,
-    assetsDir: "_assets",
+    assetsDir: "",
     manifest: true,
 
 		rollupOptions: {
-      input: (
-        
-        "./assets/javascript/main.tsx"),
-
-			// output: {
-      //   assetFileNames: "[name].[ext]",
-      //   chunkFileNames: "[name].js",
-      //   entryFileNames: "[name].js"
-      // },
+      input:  "./assets/javascript/main.tsx"
 		},
 
   },
 
-  root: "./assets/javascript", // You can change the root path as you wish
-  server: {
-    port: 3000,
-    cors: true,
-    strictPort: true,
-    proxy: {
-      // with options
-      "/api/": {
-        target: "http://localhost:8000",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
-  },
+  root: "assets/", // You can change the root path as you wish
+
 })
