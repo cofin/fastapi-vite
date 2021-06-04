@@ -12,7 +12,7 @@ export default () => {
             </span>
           </h1>
           <p className="max-w-md mx-auto mt-3 text-base text-gray-500 font-sans-expanded sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Test Application
+            Template Integration
           </p>
         </div>
       </main>

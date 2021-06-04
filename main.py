@@ -14,7 +14,8 @@ async def homepage(request):
 
 routes = [
     Route('/', endpoint=homepage),
-    Mount('/static', StaticFiles(directory='static'), name='static')
+    Mount(fastapi_vite.settings.STATIC_URL, StaticFiles(
+        directory=fastapi_vite.settings.STATIC_PATH), name='static')
 ]
 
 app = Starlette(debug=True, routes=routes)

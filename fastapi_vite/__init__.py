@@ -1,4 +1,4 @@
-from .config import pkg_meta
+from .config import pkg_meta, settings
 from .loader import vite_asset, vite_asset_url, vite_hmr_client
 
 __version__ = str(pkg_meta["version"])
