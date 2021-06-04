@@ -12,7 +12,7 @@ export default defineConfig({
 
   ],
   build: {
-    target: "es2016",
+    target: "esnext",
     outDir: "../static",
     emptyOutDir: true,
     assetsDir: "",
