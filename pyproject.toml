@@ -1,7 +1,16 @@
 [tool.poetry]
-name = "fastapi-vite"
-version = "0.2.3"
+name = "fastapi_vite"
+version = "0.2.4"
 description = "Integration utilities for FastAPI and ViteJS."
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Framework :: AsyncIO",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3 :: Only",
+]
 authors = ["Cody Fincher <cody.fincher@gmail.com>"]
 keywords = ["fastapi","starlette","vite"]
 license = "MIT"
@@ -16,6 +25,7 @@ Jinja2 = "*"
 starlette = "*"
 python-dotenv = "*"
 aiofiles = "*"
+orjson = {version = "*", optional = true}
 
 
 [tool.poetry.dev-dependencies]
