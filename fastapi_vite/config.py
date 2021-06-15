@@ -7,9 +7,9 @@ class Settings(BaseSettings):
     # Application settings
     STATIC_URL: str = "/static"
     STATIC_PATH: str = "static/"
-    VITE_DEV_MODE: bool = True
+    VITE_SERVE_MODE: bool = False
     VITE_ASSETS_PATH: str = "static/"
-    VITE_MANIFEST_PATH: Optional[str]
+    VITE_MANIFEST_PATH: Optional[str] = "static/manifest.json"
 
     @validator("VITE_MANIFEST_PATH", pre=True)
     def assemble_manifest_path(cls, v: Optional[str], values: Dict[str, Any]) -> str:
@@ -17,7 +17,7 @@ class Settings(BaseSettings):
         if v:
             return v
 
-        if values.get("VITE_DEV_MODE"):
+        if values.get("VITE_SERVE_MODE"):
             path = values.get("VITE_ASSETS_PATH")
 
         else:
@@ -38,7 +38,7 @@ class Settings(BaseSettings):
         if v:
             return v
 
-        if values.get("VITE_DEV_MODE"):
+        if values.get("VITE_SERVE_MODE"):
             url = f"{values.get('VITE_SERVER_PROTOCOL')}://{values.get('VITE_SERVER_HOST')}:{values.get('VITE_SERVER_PORT')}"
 
         else:
