@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fastapi_vite"
-version = "0.2.4"
+version = "0.3.0"
 description = "Integration utilities for FastAPI and ViteJS."
 classifiers = [
     "License :: OSI Approved :: MIT License",

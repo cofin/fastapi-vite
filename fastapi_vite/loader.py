@@ -4,14 +4,12 @@ try:
 except ImportError:  # pragma: nocover
     import json
 
-from pathlib import Path
-from typing import Dict, Optional
+from typing import ClassVar, Dict, Optional
 from urllib.parse import urljoin
 
 from jinja2 import Markup
 
 from .config import settings
-from typing import ClassVar
 
 
 class ViteLoader(object):
@@ -208,9 +206,7 @@ def vite_hmr_client() -> Markup:
     return Markup("\n".join(tags))
 
 
-def vite_asset(
-    path: str, scripts_attrs: Optional[Dict[str, str]] = None
-) -> Markup:
+def vite_asset(path: str, scripts_attrs: Optional[Dict[str, str]] = None) -> Markup:
     """
     Generates all assets include tags for the file in argument.
     Generates all scripts tags for this file and all its dependencies
@@ -232,11 +228,7 @@ def vite_asset(
 
     assert path is not None
 
-    return Markup(
-        ViteLoader().generate_vite_asset(
-            path, scripts_attrs=scripts_attrs
-        )
-    )
+    return Markup(ViteLoader().generate_vite_asset(path, scripts_attrs=scripts_attrs))
 
 
 def vite_asset_url(path: str) -> str:
