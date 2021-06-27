@@ -7,7 +7,20 @@ class Settings(BaseSettings):
     # Application settings
     STATIC_URL: str = "/static"
     STATIC_PATH: str = "static/"
-    VITE_SERVE_MODE: bool = False
+    VITE_SERVE_MODE: Optional[bool]
+
+    @validator("VITE_SERVE_MODE", pre=True)
+    def detect_serve_mode(cls, v: Optional[bool], values: Dict[str, Any]) -> str:
+        url: str
+        if v:
+            return v
+
+        if values.get("DEBUG"):
+            return True
+
+        else:
+            return False
+
     VITE_ASSETS_PATH: str = "static/"
     VITE_MANIFEST_PATH: Optional[str] = "static/manifest.json"
 
@@ -31,20 +44,6 @@ class Settings(BaseSettings):
     VITE_SERVER_PORT: int = 3000
     VITE_REACTJS_HMR: bool = False
     VITE_ASSETS_URL: Optional[str]
-
-    @validator("VITE_ASSETS_URL", pre=True)
-    def assemble_asset_url(cls, v: Optional[str], values: Dict[str, Any]) -> str:
-        url: str
-        if v:
-            return v
-
-        if values.get("VITE_SERVE_MODE"):
-            url = f"{values.get('VITE_SERVER_PROTOCOL')}://{values.get('VITE_SERVER_HOST')}:{values.get('VITE_SERVER_PORT')}"
-
-        else:
-            url = values.get("STATIC_URL")
-
-        return url
 
     class Config:
         case_sensitive = True
