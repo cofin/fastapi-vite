@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 
 from jinja2 import Markup
 
-from .config import settings
+from fastapi_vite.config import settings
 
 
 class ViteLoader(object):
@@ -22,7 +22,7 @@ class ViteLoader(object):
         """Singleton manifest loader"""
         if cls._instance is not None:
             return cls._instance
-        cls._manifest={}
+        cls._manifest = {}
         cls._instance = super().__new__(cls)
         cls._instance.parse_manifest()
 

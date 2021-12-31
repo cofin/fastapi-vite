@@ -5,7 +5,7 @@ from pydantic import BaseSettings, validator
 
 class ViteSettings(BaseSettings):
     # Application settings
-    STATIC_URL: str = "/static/" # must end with a slash
+    STATIC_URL: str = "/static/"  # must end with a slash
     STATIC_PATH: str = "static/"
     VITE_SERVE_MODE: Optional[bool]
 
