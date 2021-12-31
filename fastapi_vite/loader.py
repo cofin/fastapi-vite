@@ -112,6 +112,7 @@ class ViteLoader(object):
             {"type": "module"},
         )
 
+    @classmethod
     def generate_vite_react_hmr(cls) -> str:
         """
         Generates the script tag for the Vite WS client for HMR.
@@ -152,13 +153,13 @@ class ViteLoader(object):
                 {"type": "module", "async": "", "defer": ""},
             )
 
-        if path not in cls._manifest:
+        if path not in self._manifest:
             raise RuntimeError(
                 f"Cannot find {path} in Vite manifest at {settings.VITE_MANIFEST_PATH}"
             )
 
         tags = []
-        manifest_entry: dict = cls._manifest[path]
+        manifest_entry: dict = self._manifest[path]
         if not scripts_attrs:
             scripts_attrs = {"type": "module", "async": "", "defer": ""}
 

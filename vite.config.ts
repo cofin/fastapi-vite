@@ -15,7 +15,7 @@ export default defineConfig({
   ],
   build: {
     target: "esnext",
-    outDir: "../static",
+    outDir: "./static/",
     emptyOutDir: true,
     assetsDir: "",
     manifest: true,
@@ -26,6 +26,6 @@ export default defineConfig({
 
   },
 
-  root: "assets/", // You can change the root path as you wish
+  root: ".", // You can change the root path as you wish
 
 })
