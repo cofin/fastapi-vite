@@ -22,8 +22,10 @@ class ViteLoader(object):
         """Singleton manifest loader"""
         if cls._instance is not None:
             return cls._instance
+        cls._manifest={}
         cls._instance = super().__new__(cls)
         cls._instance.parse_manifest()
+
         return cls._instance
 
     def parse_manifest(self) -> None:
@@ -78,10 +80,7 @@ class ViteLoader(object):
                 ]
             )
 
-        return '<script {attrs_str} src="{src}"></script>'.format(
-            attrs_str=attrs_str,
-            src=src,
-        )
+        return f'<script {attrs_str} src="{src}"></script>'
 
     def generate_stylesheet_tag(self, href: str) -> str:
         """
@@ -153,15 +152,13 @@ class ViteLoader(object):
                 {"type": "module", "async": "", "defer": ""},
             )
 
-        if path not in self._manifest:
+        if path not in cls._manifest:
             raise RuntimeError(
-                "Cannot find {path} in Vite manifest at {manifest}".format(
-                    path=path, manifest=settings.VITE_MANIFEST_PATH
-                )
+                f"Cannot find {path} in Vite manifest at {settings.VITE_MANIFEST_PATH}"
             )
 
         tags = []
-        manifest_entry: dict = self._manifest[path]
+        manifest_entry: dict = cls._manifest[path]
         if not scripts_attrs:
             scripts_attrs = {"type": "module", "async": "", "defer": ""}
 

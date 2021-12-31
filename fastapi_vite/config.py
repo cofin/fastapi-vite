@@ -3,9 +3,9 @@ from typing import Any, Dict, Optional
 from pydantic import BaseSettings, validator
 
 
-class Settings(BaseSettings):
+class ViteSettings(BaseSettings):
     # Application settings
-    STATIC_URL: str = "/static"
+    STATIC_URL: str = "/static/" # must end with a slash
     STATIC_PATH: str = "static/"
     VITE_SERVE_MODE: Optional[bool]
 
@@ -46,9 +46,9 @@ class Settings(BaseSettings):
     VITE_ASSETS_URL: Optional[str]
 
     class Config:
-        case_sensitive = True
+        case_sensitive = False
         env_file = ".env"
         env_file_encoding = "utf-8"
 
 
-settings = Settings()
+settings = ViteSettings()

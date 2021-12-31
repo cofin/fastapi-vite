@@ -21,6 +21,11 @@ repository = "https://github.com/cofin/fastapi-vite"
 python = ">=3.8,<4"
 fastapi = "*"
 Jinja2 = "*"
+typer = "*"
+pydantic = {extras = ["dotenv"], version = "^1.9.0"}
+
+[tool.poetry.scripts]
+fastapi-vite = "fastapi_vite.cli:main"
 
 
 [tool.poetry.dev-dependencies]
