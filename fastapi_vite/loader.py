@@ -47,7 +47,8 @@ class ViteLoader(object):
                     )
                 )
 
-    def generate_vite_server_url(self, path: Optional[str] = None) -> str:
+    @classmethod            
+    def generate_vite_server_url(cls, path: Optional[str] = None) -> str:
         """
         Generates an URL to and asset served by the Vite development server.
 
