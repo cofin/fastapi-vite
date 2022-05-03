@@ -1,67 +1,92 @@
-.PHONY: dev check fix clean cmd-exists-% install-deps-debian install-deps-osx
+.DEFAULT_GOAL:=help
+.ONESHELL:
+PKGNAME=src/fastapi_vite
+ENV_PREFIX=$(shell python3 -c "if __import__('pathlib').Path('.venv/bin/pip').exists(): print('.venv/bin/')")
+USING_POETRY=$(shell grep "tool.poetry" pyproject.toml && echo "yes")
+USING_DOCKER=$(shell grep "TIMELY_USE_DOCKER=true" .env && echo "yes")
+USING_PNPM=$(shell python3 -c "if __import__('pathlib').Path('pnpm-lock.yaml').exists(): print('yes')")
+USING_YARN=$(shell python3 -c "if __import__('pathlib').Path('yarn.lock').exists(): print('yes')")
+USING_NPM=$(shell python3 -c "if __import__('pathlib').Path('package-lock.json').exists(): print('yes')")
+PYTHON_PACKAGES=$(shell poetry export -f requirements.txt  --without-hashes |cut -d'=' -f1 |cut -d ' ' -f1)
+BUNDLE_VERSION=$(shell poetry version -s)
+GRPC_PYTHON_BUILD_SYSTEM_ZLIB=true
+FRONTEND_SRC_DIR=src/frontend
+FRONTEND_BUILD_DIR=$(FRONTEND_SRC_DIR)/dist
+BACKEND_SRC_DIR=src
+BACKEND_BUILD_DIR=dist
 
+.EXPORT_ALL_VARIABLES:
 
-ifeq '$(findstring ;,$(PATH))' ';'
-    detected_os := Windows
-else
-    detected_os := $(shell uname 2>/dev/null || echo Unknown)
-    detected_os := $(patsubst CYGWIN%,Cygwin,$(detected_os))
-    detected_os := $(patsubst MSYS%,MSYS,$(detected_os))
-    detected_os := $(patsubst MINGW%,MSYS,$(detected_os))
+ifndef VERBOSE
+.SILENT:
 endif
-define osx_brew_install
-	HOMEBREW_NO_AUTO_UPDATE=1 brew `brew ls --versions "$(1)" | wc -l | xargs expr | sed 's/0/install/' | sed 's/1/upgrade/'` "$(1)"
-endef
-
-ifneq (,$(wildcard ./.env))
-    include .env
-    export
-	ENV_FILE_PARAM = --env-file .env
-endif
-
-cmd-exists-%:
-	@hash $(*) > /dev/null 2>&1 || \
-		(echo "ERROR: '$(*)' must be installed and available on your PATH."; exit 1)
 
 
-clean:
-	if [ -d "build" ]; then rm -r "build/*";  fi;
-	if [ -d "dist" ]; then rm -r "dist/*";  fi;
-	if [ -d ".pytest_cache" ]; then rm -r .pytest_cache;  fi;
-	if [ -f ".coverage" ]; then rm -r .coverage; fi;
+REPO_INFO ?= $(shell git config --get remote.origin.url)
+COMMIT_SHA ?= git-$(shell git rev-parse --short HEAD)
+
+help:  ## Display this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 
-upgrade:
-	poetry update
+.PHONY: upgrade-dependencies
+upgrade-dependencies:          ## Upgrade all dependencies to the latest stable versions
+	@if [ "$(USING_POETRY)" ]; then poetry update; fi
+	@echo "Python Dependencies Updated"
+	@if [ "$(USING_NPM)" ]; then npm update --latest; fi
+	@if [ "$(USING_YARN)" ]; then yarn upgrade; fi
+	@if [ "$(USING_PNPM)" ]; then pnpm upgrade; fi
+	@echo "Node Dependencies Updated"
+
+###############
+# lint & test #
+###############
+format-source: ## Format source code
+	@echo 'Formatting and cleaning source...'
+	./scripts/format-source-code.sh
+
+lint: ## check style with flake8
+	env PYTHONPATH=src poetry run flake8 src
+
+test: ## run tests quickly with the default Python
+	env PYTHONPATH=src:. poetry run pytest --cov-config .coveragerc --cov=src -l --tb=short tests
+	env PYTHONPATH=src:. poetry run coverage report -m
+
+test-frontend: ## run frontend tests using Cypress
+	env ELECTRON_RUN_AS_NODE=1 npm run cy-run-ct-firefox
+
+test-all: ## run tests on every Python version with tox
+	env PYTHONPATH=src poetry run tox
+
+coverage: ## check code coverage quickly with the default Python
+	env PYTHONPATH=src/ poetry run coverage run --source gluentlib_contrib -m pytest --cov-config .coveragerc --cov-report term --cov-report html --cov=src
+	env PYTHONPATH=src/ poetry run coverage report -m
+
+.PHONY: install
+install:          ## Install the project in dev mode.
+	@if ! poetry --version > /dev/null; then echo 'poetry is required, install from https://python-poetry.org/'; exit 1; fi
+	@if [ "$(USING_POETRY)" ]; then poetry config virtualenvs.in-project true && poetry install; fi
+	@if [ "$(USING_NPM)" ]; then npm install; fi
+	@echo "Install complete.  ** If you want to recreate your entire virtualenv run 'make virtualenv'"
 
 
-install-deps-osx:
-	$(call osx_brew_install,python3)
-	$(call osx_brew_install,ngrok)
-	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+.PHONY: licenses
+licenses: 			## Generate licenses
+	@echo "Generating Licenses"
+	@poetry run pip-licenses --with-urls --format=markdown --packages ${PYTHON_PACKAGES}
 
-install-deps-ubuntu:
-	sudo apt update && sudo apt install -y build-essential python3 make libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+.PHONY: license-file
+license-file: 		## Generate licenses
+	@echo "Generating License file"
+	@poetry run pip-licenses --packages ${PYTHON_PACKAGES} --format=plain-vertical --with-license-file > LICENSE.md
 
+###########
+# version #
+###########
+version-bump-major: ## bump major version
+	poetry run bump2version major
+version-bump-minor: ## bump minor version
+	poetry run bump2version --allow-dirty  minor
+version-bump-patch: ## bump patch version
+	poetry run bump2version patch
 
-install-runtime:
-	poetry config virtualenvs.in-project true
-	poetry install --no-dev
-
-
-install:
-	poetry config virtualenvs.in-project true
-	poetry install
-
-
-check:
-	poetry run black --check fastapi_vite
-	poetry run isort --check fastapi_vite --skip .venv
-	poetry run flake8 fastapi_vite --exclude=node_modules,migrations
-	poetry run pre-commit run
-
-fix:
-	poetry run pycln fastapi_vite --all --exclude '/(\.direnv|\.eggs|\.git|\.hg|\.mypy_cache|\.nox|\.tox|\.venv|\.svn|_build|buck-out|build|dist|\.venv|node_modules)/'
-	poetry run isort fastapi_vite --skip .venv
-	poetry run black fastapi_vite --exclude '/(\.direnv|\.eggs|\.git|\.hg|\.mypy_cache|\.nox|\.tox|\.venv|\.svn|_build|buck-out|build|dist|\.venv|node_modules)/'

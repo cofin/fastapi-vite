@@ -16,28 +16,32 @@ license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/cofin/fastapi-vite"
 repository = "https://github.com/cofin/fastapi-vite"
-
+packages = [
+    { include = "fastapi_vite", from = "src/"}
+]
 [tool.poetry.dependencies]
 python = ">=3.8,<4"
 fastapi = "*"
 Jinja2 = "*"
-typer = "*"
-pydantic = {extras = ["dotenv"], version = "^1.9.0"}
-
-[tool.poetry.scripts]
-fastapi-vite = "fastapi_vite.cli:main"
+pydantic = "*"
 
 
-[tool.poetry.dev-dependencies]
-pytest-cov = ">=2.10.1"
-pytest = ">=6.2.3"
+[tool.poetry.group.dev.dependencies]
+python-dotenv = "^0.20.0"
+pytest = ">=6.2.4"
+pytest-cov = ">=3.0.0"
+pytest-asyncio = ">=0.16.0"
+pre-commit = ">=2.17.0"
+bump2version = ">=1.0.1"
+isort = ">=5.10.1"
+flake8 = ">=4.0.1"
+pylint = ">=2.12.2"
+black = ">=21.12b0"
 autoflake = ">=1.4"
-flake8 = ">=3.8.4"
-mypy = ">=0.790"
-isort = ">=5.0"
-pre-commit = ">=2.8.2"
-black = ">=21.5b2"
-uvicorn = ">=0.14.0"
+pip-licenses = ">=3.5.3"
+wemake-python-styleguide = ">=0.16.0"
+uvicorn = "*"
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

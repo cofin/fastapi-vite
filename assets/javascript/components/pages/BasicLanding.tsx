@@ -7,12 +7,12 @@ export default () => {
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
             <span className="block xl:inline">FastAPI</span>
-            <span className="block text-gluentgreen-600 2xl:inline">
+            <span className="block text-indigo-600 2xl:inline">
               ViteJS
             </span>
           </h1>
           <p className="max-w-md mx-auto mt-3 text-base text-gray-500 font-sans-expanded sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            Template Integration
+            Template Integration.  Jinja2, Vite with Hot Reloading
           </p>
         </div>
       </main>

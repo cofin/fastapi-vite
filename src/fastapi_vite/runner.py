@@ -1,20 +1,13 @@
-
 # Standard Library
 import asyncio
 import logging
 from asyncio.futures import Future
 from asyncio.streams import StreamReader
 from asyncio.subprocess import Process
-from typing import Any, ClassVar, Coroutine, Dict, Optional, Set
-from urllib.parse import urljoin
-import anyio
-
-# Third Party Libraries
-from jinja2 import Markup
-from pydantic import BaseSettings, validator
+from typing import Any, ClassVar, Coroutine, Optional, Set
 
 
-class ViteRunner(object):
+class ViteRunner:
     """Vite client utility.
 
     Utility class for handling Redis database connection and operations.
@@ -48,13 +41,12 @@ class ViteRunner(object):
             Future
 
         """
-        cls.process = await anyio.open_process("npm run dev")
-        # cls.process = await asyncio.create_subprocess_shell(
-        #     "npm run dev",
-        #     stdout=asyncio.subprocess.PIPE,
-        #     stderr=asyncio.subprocess.PIPE,
-        #     restore_signals=True,
-        # )
+        cls.process = await asyncio.create_subprocess_shell(
+            "npm run dev",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            restore_signals=True,
+        )
         cls.logger.info("⚡ Starting Vite Asset Service for Live Reload functionality")
 
         cls.future = asyncio.ensure_future(
@@ -91,8 +83,8 @@ class ViteRunner(object):
             Future
 
         """
-        cls.process = await asyncio.create_subprocess_shell(
-            "npm run build",
+        cls.process = await asyncio.create_subprocess_exec(
+            ["npm", "run", "build"],
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
             restore_signals=True,
@@ -109,9 +101,9 @@ class ViteRunner(object):
     @classmethod
     async def _read_from_stdout(cls, stream: StreamReader):
         while chunk := await stream.readline():
-            cls.logger.debug(f"{chunk.decode('utf-8').strip()}")
+            cls.logger.info(f"{chunk.decode('utf-8').strip()}")
 
-    @staticmethod
+    @classmethod
     async def _read_from_stderr(cls, stream: StreamReader):
         while chunk := await stream.readline():
             cls.logger.error(f"{chunk.decode('utf-8').strip()}")
