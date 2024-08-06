@@ -33,7 +33,7 @@ class ViteSettings(BaseSettings):
         return False
 
     assets_path: str = "static/"
-    manifest_path: Optional[str]
+    manifest_path: Optional[str] = None
 
     @field_validator("manifest_path", mode="before")
     @classmethod
